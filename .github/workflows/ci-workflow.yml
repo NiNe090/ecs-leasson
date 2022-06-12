@@ -3,7 +3,7 @@ name: CI flow for Amazon ECS
 on: [push]
 
 env:
-  SLACK_WEBHOOK: https://hooks.slack.com/services/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
+  SLACK_WEBHOOK: https://hooks.slack.com/services/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
 
 jobs:
   ci: 
@@ -25,7 +25,6 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.0.2
       if: success()
       env:
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
         SLACK_TITLE: 'CI flow / Success'
         SLACK_COLOR: '#5cb85c'
         SLACK_MESSAGE: 'Message for Success'
