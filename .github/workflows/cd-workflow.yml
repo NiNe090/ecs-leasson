@@ -11,9 +11,9 @@ env:
   AWS_REGION: ap-northeast-1
   ECS_WEBAPP_SERVICE: yoko-ecs-sample-webapp
   ECS_RESTAPI_SERVICE: ecs-sample-restapi
-  WEBAPP_CONTAINER_NAME: yoko-sample-webapp
-  BACKEND_CONTAINER_NAME: yoko-sample-backend
-  RESTAPI_CONTAINER_NAME: yoko-sample-restapi
+  WEBAPP_CONTAINER_NAME: yoko-ecs-sample-webapp
+  BACKEND_CONTAINER_NAME: yoko-ecs-sample-backend
+  RESTAPI_CONTAINER_NAME: yoko-ecs-sample-restapi
   WEBAPP_TAG: 1.0.0
   BACKEND_TAG: 1.0.0
   RESTAPI_TAG: 1.0.0
@@ -57,21 +57,21 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         cd sample-backend
-        docker build -t $ECR_REGISTRY/$BACKEND_CONTAINER_NAME: $BACKEND_TAG .
-        docker tag $ECR_REGISTRY/$BACKEND_CONTAINER_NAME: $BACKEND_TAG $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:latest
-        docker push $ECR_REGISTRY/$BACKEND_CONTAINER_NAME: $BACKEND_TAG
-        docker push $ECR_REGISTRY/$BACKEND_CONTAINER_NAME: latest
+        docker build -t $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:$BACKEND_TAG .
+        docker tag $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:$BACKEND_TAG $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:latest
+        docker push $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:$BACKEND_TAG
+        docker push $ECR_REGISTRY/$BACKEND_CONTAINER_NAME:latest
 
     - name: restapi push to ECR
       id: build-image-restapi
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        cd sample-webapp
-        docker build -t $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME: $RESTAPI_TAG .
-        docker tag $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME: $RESTAPI_TAG $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:latest
-        docker push $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME: $RESTAPI_TAG
-        docker push $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME: latest
+        cd sample-restapi
+        docker build -t $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:$RESTAPI_TAG .
+        docker tag $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:$RESTAPI_TAG $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:latest
+        docker push $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:$RESTAPI_TAG
+        docker push $ECR_REGISTRY/$RESTAPI_CONTAINER_NAME:latest
 
     - name: Deploy to ECS
       run: |
