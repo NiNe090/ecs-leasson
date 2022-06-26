@@ -52,7 +52,7 @@ jobs:
         docker push $ECR_REGISTRY/$WEBAPP_CONTAINER_NAME: latest
 
     - name: backend push to ECR
-      id: build-image-webapp
+      id: build-image-backend
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
@@ -63,7 +63,7 @@ jobs:
         docker push $ECR_REGISTRY/$BACKEND_CONTAINER_NAME: latest
 
     - name: restapi push to ECR
-      id: build-image-webapp
+      id: build-image-restapi
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
